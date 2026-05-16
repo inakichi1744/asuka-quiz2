@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🏯 飛鳥時代2 クイズ</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&display=swap');
@@ -31,7 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 48px;
+  padding: 0 0 env(safe-area-inset-bottom, 48px);
   color: var(--ink);
   overflow-x: hidden;
 }
@@ -49,7 +49,7 @@ body::before {
 
 #hud {
   position: sticky; top: 0; z-index: 100;
-  width: 100%; max-width: 540px;
+  width: 100%; max-width: min(540px, 100%);
   background: linear-gradient(135deg, #120c02 0%, #251a06 100%);
   border-bottom: 2px solid var(--primary);
   padding: 10px 16px 8px; display: none;
@@ -101,18 +101,18 @@ body::before {
 .btn-title-ok { margin-top:20px; padding:10px 32px; background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); color:white; border:none; border-radius:6px; font-size:0.95rem; font-weight:700; cursor:pointer; font-family:'Noto Sans JP',sans-serif; }
 
 #intro-screen { width:100%; display:flex; flex-direction:column; align-items:center; padding:48px 16px 60px; position:relative; z-index:1; }
-.intro-emblem { font-size:5rem; margin-bottom:8px; filter:drop-shadow(0 4px 16px rgba(160,124,58,0.5)); animation:float 3s ease-in-out infinite; }
+.intro-emblem { font-size:clamp(3.5rem,10vw,5rem); margin-bottom:8px; filter:drop-shadow(0 4px 16px rgba(160,124,58,0.5)); animation:float 3s ease-in-out infinite; }
 @keyframes float { 0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} }
-.intro-title { font-family:'Kaisei Decol',serif; font-size:1.8rem; color:var(--primary-light); text-shadow:0 2px 12px rgba(160,124,58,0.4); margin-bottom:4px; text-align:center; }
+.intro-title { font-family:'Kaisei Decol',serif; font-size:clamp(1.4rem,5vw,1.8rem); color:var(--primary-light); text-shadow:0 2px 12px rgba(160,124,58,0.4); margin-bottom:4px; text-align:center; }
 .intro-sub { color:#c49a5a; font-size:0.85rem; margin-bottom:28px; text-align:center; }
 .intro-card { width:100%; max-width:340px; background:var(--parchment); border:2px solid var(--primary); border-radius:8px; padding:20px; margin-bottom:28px; text-align:center; }
 .intro-tags { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:16px; }
 .itag { padding:4px 12px; border-radius:999px; font-size:0.78rem; font-weight:700; background:rgba(92,74,30,0.12); color:var(--primary-dark); border:1px solid rgba(92,74,30,0.25); }
 .intro-desc { font-size:0.88rem; color:#5a3a1a; line-height:1.8; }
-.btn-start { padding:16px 48px; background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); color:white; border:none; border-radius:8px; font-family:'Kaisei Decol',serif; font-size:1.2rem; font-weight:700; cursor:pointer; box-shadow:0 4px 20px rgba(160,124,58,0.4); transition:all 0.2s; letter-spacing:0.05em; }
+.btn-start { padding:clamp(12px,3vw,16px) clamp(32px,8vw,48px); background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); color:white; border:none; border-radius:8px; font-family:'Kaisei Decol',serif; font-size:clamp(1rem,3.5vw,1.2rem); font-weight:700; cursor:pointer; box-shadow:0 4px 20px rgba(160,124,58,0.4); min-height:52px; width:100%; max-width:340px; -webkit-tap-highlight-color:transparent; }
 .btn-start:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(160,124,58,0.5); }
 
-#quiz-screen { display:none; width:100%; max-width:540px; padding:16px 0 0; position:relative; z-index:1; }
+#quiz-screen { display:none; width:100%; max-width:min(540px,100%); padding:16px 0 0; position:relative; z-index:1; }
 .section-badge { display:inline-block; background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); color:white; font-size:0.7rem; font-weight:700; padding:3px 14px; border-radius:999px; margin-bottom:8px; letter-spacing:0.05em; }
 .q-card { background:var(--parchment); border-radius:6px; padding:28px 20px 20px; box-shadow:var(--shadow),inset 0 0 0 1px rgba(92,74,30,0.18); border-top:3px solid var(--primary); margin:0 16px; animation:cardIn 0.35s cubic-bezier(.4,0,.2,1); }
 @keyframes cardIn { from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);} }
@@ -121,10 +121,10 @@ body::before {
 .q-type-badge { font-size:0.68rem; padding:2px 8px; border-radius:999px; font-weight:700; }
 .q-type-badge.choice { background:#fff8e1; color:var(--gold-dark); }
 .q-type-badge.text   { background:var(--parchment2); color:var(--primary-dark); }
-.q-text { font-family:'Kaisei Decol',serif; font-size:1.05rem; line-height:1.7; color:var(--ink); margin-bottom:18px; white-space:pre-wrap; }
+.q-text { font-family:'Kaisei Decol',serif; font-size:clamp(0.95rem,3vw,1.05rem); line-height:1.7; color:var(--ink); margin-bottom:18px; white-space:pre-wrap; }
 
 .choices { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
-.choice-btn { width:100%; padding:12px 16px; border:2px solid rgba(92,74,30,0.2); border-radius:6px; background:white; font-size:0.93rem; text-align:left; cursor:pointer; transition:all 0.2s; font-family:'Noto Sans JP',sans-serif; color:var(--ink); position:relative; }
+.choice-btn { width:100%; padding:clamp(10px,2.5vw,12px) clamp(10px,3vw,16px); border:2px solid rgba(92,74,30,0.2); border-radius:6px; background:white; font-size:clamp(0.85rem,2.8vw,0.93rem); text-align:left; cursor:pointer; font-family:'Noto Sans JP',sans-serif; color:var(--ink); position:relative; min-height:44px; padding-right:36px; }
 .choice-btn:hover:not(:disabled) { border-color:var(--primary); background:var(--parchment2); transform:translateX(4px); }
 .choice-btn.correct  { border-color:var(--success); background:#e8f5e9; color:#1b5e20; font-weight:700; }
 .choice-btn.wrong    { border-color:var(--danger);  background:#ffebee; color:#b71c1c; font-weight:700; }
@@ -133,7 +133,7 @@ body::before {
 .c-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); }
 
 .text-input-area { margin-bottom:10px; }
-.text-input-area input { width:100%; padding:12px 14px; border:2px solid rgba(92,74,30,0.22); border-radius:6px; font-size:1rem; font-family:'Noto Sans JP',sans-serif; outline:none; background:white; transition:border-color 0.2s; color:var(--ink); }
+.text-input-area input { width:100%; padding:clamp(10px,3vw,12px) 14px; border:2px solid rgba(92,74,30,0.22); border-radius:6px; font-size:clamp(0.95rem,3vw,1rem); font-family:'Noto Sans JP',sans-serif; outline:none; background:white; transition:border-color 0.2s; color:var(--ink); }
 .text-input-area input:focus { border-color:var(--primary); }
 .text-input-area input.correct { border-color:var(--success); background:#e8f5e9; }
 .text-input-area input.wrong   { border-color:var(--danger);  background:#ffebee; }
@@ -154,13 +154,13 @@ body::before {
 .fb-exp { font-size:0.8rem; margin-top:4px; }
 .fb-explain { font-size:0.83rem; color:#555; margin-top:6px; line-height:1.6; }
 
-.btn { width:100%; padding:13px; border:none; border-radius:6px; font-size:0.95rem; font-weight:700; cursor:pointer; font-family:'Noto Sans JP',sans-serif; transition:all 0.2s; }
+.btn { width:100%; padding:clamp(11px,3vw,13px); border:none; border-radius:6px; font-size:0.95rem; font-weight:700; cursor:pointer; font-family:'Noto Sans JP',sans-serif; transition:all 0.2s; }
 .btn-primary { background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); color:white; box-shadow:0 3px 12px rgba(160,124,58,0.3); }
 .btn-primary:hover { transform:translateY(-1px); box-shadow:0 5px 16px rgba(160,124,58,0.4); }
 .btn-secondary { background:linear-gradient(135deg,#5d1a1a,var(--accent)); color:white; }
 .btn:disabled { opacity:0.6; cursor:default; transform:none !important; }
 
-#result-screen { display:none; width:100%; max-width:540px; padding:40px 16px 60px; position:relative; z-index:1; text-align:center; }
+#result-screen { display:none; width:100%; max-width:min(540px,100%); padding:40px 16px 60px; position:relative; z-index:1; text-align:center; }
 .result-emblem { font-size:4rem; margin-bottom:12px; }
 .result-title { font-family:'Kaisei Decol',serif; font-size:1.5rem; color:var(--primary-light); margin-bottom:4px; }
 .result-title-display { display:inline-block; background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); color:white; font-size:0.9rem; font-weight:700; padding:4px 16px; border-radius:999px; margin-bottom:16px; }
@@ -185,6 +185,44 @@ body::before {
 .tc-badge.locked { background:rgba(92,74,30,0.1); color:#b09060; border:1px dashed rgba(92,74,30,0.25); }
 .stars { font-size:1.8rem; letter-spacing:4px; margin:8px 0; }
 .result-btns { display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+
+@media (min-width: 768px) {
+  :root { --max-w: 600px; }
+  .q-text { font-size: 1.1rem; }
+  .choice-btn { font-size: 1rem; padding: 14px 20px; }
+  .btn { font-size: 1rem; padding: 15px; }
+}
+
+/* ===== レスポンシブ対応 (iPhone / iPad) ===== */
+@media (max-width: 390px) {
+  .intro-title { font-size: 1.5rem; }
+  .intro-emblem { font-size: 4rem; }
+  .btn-start { font-size: 1rem; padding: 14px 32px; }
+  .q-card { padding: 20px 14px 16px; }
+  .q-text { font-size: 0.95rem; }
+  .choice-btn { font-size: 0.85rem; padding: 10px 12px; }
+  .result-score { font-size: 2.4rem; }
+}
+@media (min-width: 768px) {
+  #hud { max-width: 600px; }
+  #quiz-screen { max-width: 600px; }
+  #intro-screen { max-width: 600px; margin: 0 auto; }
+  #result-screen { max-width: 600px; }
+  .q-card { padding: 36px 32px 28px; }
+  .q-text { font-size: 1.15rem; }
+  .intro-title { font-size: 2.2rem; }
+  .btn-start { font-size: 1.3rem; padding: 18px 56px; }
+  .choice-btn { font-size: 1rem; padding: 14px 20px; }
+  .result-score { font-size: 3.5rem; }
+  .intro-card { max-width: 420px; }
+}
+@media (min-width: 1024px) {
+  #hud, #quiz-screen, #intro-screen, #result-screen { max-width: 680px; }
+}
+body { padding-bottom: max(48px, env(safe-area-inset-bottom)); }
+#hud { padding-top: max(10px, env(safe-area-inset-top)); }
+.choice-btn, .btn, .btn-start, .hint-btn { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+input[type="text"] { -webkit-appearance: none; border-radius: 6px; font-size: 16px; }
 </style>
 </head>
 <body>
@@ -264,7 +302,7 @@ body::before {
     <div id="choices-wrap"></div>
     <div id="text-input-wrap" style="display:none">
       <div class="text-input-area">
-        <input type="text" id="text-ans" placeholder="答えを入力…" autocomplete="off">
+        <input type="text" id="text-ans" placeholder="答えを入力…" autocomplete="off" autocorrect="off" autocapitalize="off">
       </div>
       <div class="hint-row">
         <button class="hint-btn" id="hint-btn" onclick="showHint()">💡 ヒントを見る</button>
